@@ -8,6 +8,7 @@
 </head>
 <body class="bg-gray-50 text-gray-800">
 
+  <!-- Navbar -->
   <nav class="bg-white shadow-md fixed w-full top-0">
     <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
       <h1 class="text-2xl font-bold text-blue-600">FastAPI Docs</h1>
@@ -17,6 +18,7 @@
     </div>
   </nav>
 
+  <!-- Documentation Content -->
   <section class="max-w-4xl mx-auto pt-28 pb-16 px-6">
     <h2 class="text-4xl font-bold text-center mb-6">📘 FastAPI Documentation</h2>
     <p class="text-lg text-center mb-12">Here’s a quick guide on how this FastAPI app works.</p>
@@ -26,7 +28,6 @@
         <h3 class="text-2xl font-semibold mb-2">🚀 Getting Started</h3>
         <p>FastAPI is a modern Python web framework for building APIs quickly and efficiently.</p>
       </div>
-
       <div class="p-6 bg-white shadow rounded-lg">
         <h3 class="text-2xl font-semibold mb-2">⚡ Key Features</h3>
         <ul class="list-disc pl-6">
@@ -35,21 +36,32 @@
           <li>High performance thanks to Starlette</li>
         </ul>
       </div>
-
-      <div class="p-6 bg-white shadow rounded-lg">
-        <h3 class="text-2xl font-semibold mb-2">🔗 Useful Links</h3>
-        <p>Explore the built-in docs:</p>
-        <ul class="list-disc pl-6">
-          <li><a href="/docs" class="text-blue-600 hover:underline">Swagger UI (/docs)</a></li>
-          <li><a href="/redoc" class="text-blue-600 hover:underline">ReDoc (/redoc)</a></li>
-        </ul>
-      </div>
     </div>
   </section>
 
-  <footer class="bg-gray-800 text-gray-300 py-6 text-center">
-    <p>&copy; 2025 FastAPI Documentation 🚀</p>
-  </footer>
+  <!-- Floating Chat Box -->
+  <div class="fixed bottom-4 right-4 w-80 bg-white shadow-lg rounded-lg border">
+    <div class="bg-blue-600 text-white p-3 rounded-t-lg">💬 Submit Review</div>
+    <form id="reviewForm" class="p-3 space-y-2">
+      <textarea name="message" id="message" rows="3" class="w-full p-2 border rounded" placeholder="Write your feedback..."></textarea>
+      <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 w-full">Submit</button>
+    </form>
+    <div id="response" class="text-center text-green-600 text-sm pb-2"></div>
+  </div>
+
+  <script>
+    document.getElementById("reviewForm").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const formData = new FormData(e.target);
+      const res = await fetch("/submit-review", {
+        method: "POST",
+        body: formData
+      });
+      const data = await res.json();
+      document.getElementById("response").innerText = data.message;
+      document.getElementById("message").value = "";
+    });
+  </script>
 
 </body>
 </html>
