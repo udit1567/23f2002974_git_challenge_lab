@@ -10,3 +10,6 @@ app.mount("/static", StaticFiles(directory="static"), name="static")
 async def read_index():
     return FileResponse("static/index.html")
 
+@app.get("/docs-page")
+async def read_docs():
+    return FileResponse("static/docs.html")
